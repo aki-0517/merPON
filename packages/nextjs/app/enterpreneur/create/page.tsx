@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { useEffect } from "react";
-import { Card } from "../form/card";
 import { SelectTab } from "../form/selectTab";
 import { SwitchField } from "../form/switchField";
 import { Box, Tab, Tabs } from "@mui/material";
 import { Typography } from "@mui/material";
+import { Card } from "~~/components/Card";
+import { CardList } from "~~/components/CardList";
+import DividerWithText from "~~/components/DividerWithText";
 
 // タブの種類を表すユニオン型を定義
 type TabType = "割引券" | "引換券" | "会員券";
@@ -27,9 +29,36 @@ export default function TicketTabs() {
     setValue(tabLabels[newValue]);
   };
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
+  const cards = [
+    {
+      title: "引換券",
+      issueDate: "2024.12.05",
+      amount: 7000,
+      expiryDate: "2025.06.30",
+      usageScope: "店舗全体",
+    },
+    {
+      title: "引換券",
+      issueDate: "2024.12.05",
+      amount: 7000,
+      expiryDate: "2025.06.30",
+      usageScope: "店舗全体",
+    },
+    {
+      title: "引換券",
+      issueDate: "2024.12.05",
+      amount: 7000,
+      expiryDate: "2025.06.30",
+      usageScope: "店舗全体",
+    },
+    {
+      title: "引換券",
+      issueDate: "2024.12.05",
+      amount: 7000,
+      expiryDate: "2025.06.30",
+      usageScope: "店舗全体",
+    },
+  ];
 
   return (
     <div>
@@ -37,10 +66,12 @@ export default function TicketTabs() {
         クーポンの登録
       </Typography>
       <SelectTab value={value} handleChange={handleChange} />
-      <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+      <Box sx={{ display: "flex", gap: 4, justifyContent: "center", mb: 5, pb: 3 }}>
         <Card {...content} />
         <SwitchField value={value} />
       </Box>
+      <DividerWithText />
+      <CardList cards={cards} />
     </div>
   );
 }

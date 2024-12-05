@@ -91,7 +91,11 @@ export const Header = () => {
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
+            <img
+              alt="SE2 logo"
+              className="cursor-pointer"
+              src="https://s3-alpha-sig.figma.com/img/5b61/3f01/546695202d90d816459b0f7bd2d7e6f0?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=FnKG9LqP91kdX0YzT2qMAyK-0vBU-i5ZlFm2Bg8h644mP6RxX6JzXj3AOtF0Z3elA97eWfJm0ze~pHW5~JKUjTdkIB4IXtVEc5~NJnnrfzZLgoBm3DN8w7z5aB59Wna1EpFoyy6f2cpzdizt8WRhvuPBiV~YAZNpAxQTYH5IPE-an7MZg3IrDqKOQLtNb5ir9CI4CdIEEqEOdSVl4fiJoGDCKWA2SHrg-aptB5FaH7KVW0j3DdftH8VDwE1FHOmJYSFx3nBz~YF1p6g30FpUn7oQ3Qy5-xGpipuWRrnsF4s9k~dh41X1v7Qr1CzTS8r7N8ng4z90uQsyd1kw4BYjOA__"
+            />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Scaffold-ETH</span>
