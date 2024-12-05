@@ -36,9 +36,27 @@ export const SelectTab: FC<SelectTabProps> = ({ value, handleChange }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}>
       <CustomTabs value={value} onChange={handleChange} aria-label="custom tabs">
-        <CustomTab label="割引券" />
-        <CustomTab label="引換券" />
-        <CustomTab label="会員券" />
+        <CustomTab
+          sx={{
+            color: value === "割引券" ? "white" : "black",
+            backgroundColor: value === "割引券" ? "red" : "transparent",
+          }}
+          label="割引券"
+        />
+        <CustomTab
+          sx={{
+            color: value === "引換券" ? "white" : "black",
+            backgroundColor: value === "引換券" ? "red" : "transparent",
+          }}
+          label="引換券"
+        />
+        <CustomTab
+          sx={{
+            color: value === "会員券" ? "white" : "black",
+            backgroundColor: value === "会員券" ? "red" : "transparent",
+          }}
+          label="会員券"
+        />
       </CustomTabs>
     </Box>
   );

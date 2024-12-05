@@ -23,7 +23,7 @@ export const CardList = ({ cards }: CardListProps) => {
         justifyContent: "center",
         alignItems: "center",
         width: "70%",
-        margin: "100px auto",
+        margin: "50px auto",
       }}
     >
       {cards.map((card, index) => (
