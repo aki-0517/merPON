@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ExpirableERC721: {
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
       abi: [
         {
           inputs: [
@@ -29,6 +29,11 @@ const deployedContracts = {
           ],
           stateMutability: "nonpayable",
           type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "ERC721EnumerableForbiddenBatchMint",
+          type: "error",
         },
         {
           inputs: [
@@ -140,6 +145,22 @@ const deployedContracts = {
               name: "owner",
               type: "address",
             },
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "ERC721OutOfBoundsIndex",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
           ],
           name: "OwnableInvalidOwner",
           type: "error",
@@ -241,9 +262,33 @@ const deployedContracts = {
             },
             {
               indexed: false,
+              internalType: "string",
+              name: "title",
+              type: "string",
+            },
+            {
+              indexed: false,
               internalType: "uint256",
-              name: "expirationTime",
+              name: "issueDate",
               type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "expiryDate",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "usageScope",
+              type: "string",
             },
           ],
           name: "TokenMinted",
@@ -377,6 +422,52 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "listVouchers",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "title",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "issueDate",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "expiryDate",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "usageScope",
+                  type: "string",
+                },
+              ],
+              internalType: "struct ExpirableERC721.Voucher[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "to",
               type: "address",
             },
@@ -386,9 +477,29 @@ const deployedContracts = {
               type: "uint256",
             },
             {
-              internalType: "uint256[]",
-              name: "expirationTimes",
-              type: "uint256[]",
+              internalType: "string",
+              name: "title",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "issueDate",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expiryDate",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "usageScope",
+              type: "string",
             },
           ],
           name: "mintBatch",
@@ -553,11 +664,54 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "tokenByIndex",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
               name: "tokenId",
               type: "uint256",
             },
           ],
           name: "tokenExpiration",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "tokenOfOwnerByIndex",
           outputs: [
             {
               internalType: "uint256",
@@ -582,6 +736,19 @@ const deployedContracts = {
               internalType: "string",
               name: "",
               type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -625,18 +792,35 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {
-        approve: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        getApproved: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        isApprovedForAll: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        name: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        ownerOf: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        safeTransferFrom: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        setApprovalForAll: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        supportsInterface: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        symbol: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        tokenURI: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        approve:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        balanceOf:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        getApproved:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        isApprovedForAll:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        name: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        ownerOf:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        safeTransferFrom:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        setApprovalForAll:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        supportsInterface:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        symbol:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        tokenByIndex:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        tokenOfOwnerByIndex:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        tokenURI:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        totalSupply:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        transferFrom:
+          "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         owner: "@openzeppelin/contracts/access/Ownable.sol",
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
