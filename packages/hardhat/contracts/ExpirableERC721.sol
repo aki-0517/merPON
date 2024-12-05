@@ -32,11 +32,7 @@ contract ExpirableERC721 is ERC721, Ownable {
      * @param numberOfTokens The number of tokens to mint.
      * @param expirationTimes An array of expiration timestamps for each token.
      */
-    function mintBatch(
-        address to,
-        uint256 numberOfTokens,
-        uint256[] memory expirationTimes
-    ) external onlyOwner {
+    function mintBatch(address to, uint256 numberOfTokens, uint256[] memory expirationTimes) external onlyOwner {
         require(numberOfTokens == expirationTimes.length, "Mismatched inputs");
 
         for (uint256 i = 0; i < numberOfTokens; i++) {

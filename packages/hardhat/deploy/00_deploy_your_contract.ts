@@ -7,9 +7,7 @@ import { DeployFunction } from "hardhat-deploy/types";
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployExpirableERC721: DeployFunction = async function (
-  hre: HardhatRuntimeEnvironment
-) {
+const deployExpirableERC721: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
