@@ -9,6 +9,9 @@ import { Typography } from "@mui/material";
 import { Card } from "~~/components/Card";
 import { CardList } from "~~/components/CardList";
 import DividerWithText from "~~/components/DividerWithText";
+import { useAccount } from "wagmi";
+import { useERC721List } from "~~/hooks/scaffold-eth/useERC721List";
+import Button from "@mui/material/Button";
 
 // タブの種類を表すユニオン型を定義
 type TabType = "割引券" | "引換券" | "会員券";
@@ -24,41 +27,24 @@ const content = {
 export default function TicketTabs() {
   const [value, setValue] = useState<TabType>("割引券");
 
+  const { address } = useAccount();
+  const { vouchers } = useERC721List(address || '');
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     const tabLabels: TabType[] = ["割引券", "引換券", "会員券"];
     setValue(tabLabels[newValue]);
   };
 
-  const cards = [
-    {
-      title: "引換券",
-      issueDate: "2024.12.05",
-      amount: 7000,
-      expiryDate: "2025.06.30",
-      usageScope: "店舗全体",
-    },
-    {
-      title: "引換券",
-      issueDate: "2024.12.05",
-      amount: 7000,
-      expiryDate: "2025.06.30",
-      usageScope: "店舗全体",
-    },
-    {
-      title: "引換券",
-      issueDate: "2024.12.05",
-      amount: 7000,
-      expiryDate: "2025.06.30",
-      usageScope: "店舗全体",
-    },
-    {
-      title: "引換券",
-      issueDate: "2024.12.05",
-      amount: 7000,
-      expiryDate: "2025.06.30",
-      usageScope: "店舗全体",
-    },
-  ];
+  const cards = vouchers?.map((voucher) => {
+    const amount = voucher.amount;
+    return {
+      title: voucher.title,
+      issueDate: voucher.issueDate.toString(),
+      amount: Number(amount),
+      expiryDate: voucher.expiryDate.toString(),
+      usageScope: voucher.usageScope,
+    };
+  }) || [];
 
   return (
     <div>
@@ -72,6 +58,17 @@ export default function TicketTabs() {
       </Box>
       <DividerWithText />
       <CardList cards={cards} />
+      <Button
+          variant="contained"
+          color="error"
+          sx={{
+            fontWeight: "bold",
+            display: "block", // 中央揃えのためにブロック要素に
+            margin: "100px auto", // 上下に20pxのマージンを追加、左右は自動で中央揃え
+          }}
+        >
+          クーポンを送る
+        </Button>
     </div>
   );
 }
